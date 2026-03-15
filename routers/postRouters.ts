@@ -58,4 +58,16 @@ router.post(
   }
 );
 
+router.post("/vote/:postid", ensureAuthenticated, async(req, res) =>{
+  const postId = parseInt(req.params.postid);
+  const user = await req.user;
+  const userId = user.id;
+  const value = parseInt(req.body.setvoteto)
+
+
+  await database.setVote(postId,userId,value)
+
+  res.redirect(`/posts/show/${postId}`);
+});
+
 export default router;

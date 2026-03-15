@@ -30,6 +30,21 @@
           <%= post.subgroup %>
           </a>
         </p>
+        <% if (user) { %>
+          <div>
+          <form action="/posts/vote/<%= post.id %>" method="post">
+           <button type="submit" name="setvoteto" value="1">👍Like</button>
+          <button type="submit" name="setvoteto" value="-1">👎dislike</button>
+         <button type="submit" name="setvoteto" value="0">Remove Vote</button>
+        </form>
+        <% } %>
+        
+
+        <p>
+        Score:
+        <%= post.votes.reduce((sum, vote) => sum + vote.value, 0) %>
+        </p>
+        </div>
       </div>
     </main>
   </body>

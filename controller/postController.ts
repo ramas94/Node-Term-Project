@@ -9,4 +9,8 @@ async function getPost(id: any){
   return db.getPost(id);
 }
 
-export { getPosts, getPost};
+async function setVote(post_id: number, user_id: number, value: number) {
+  return db.setVoteto(post_id,user_id,value);
+}
+
+export { getPosts, getPost, setVote};

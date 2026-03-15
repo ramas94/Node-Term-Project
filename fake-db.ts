@@ -166,6 +166,30 @@ function addComment(post_id, creator, description) {
   return comment;
 }
 
+function setVoteto(post_id:number, user_id:number, value:number){
+  const existingVote = votes.find(
+    (vote)=> Number(vote.post_id) === Number(post_id) && Number(vote.user_id) === Number(user_id)
+  );
+
+  if(existingVote){
+    if(value===0){
+      const index = votes.indexOf(existingVote);
+      votes.splice(index,1);
+    } else{
+      existingVote.value = value;
+    }
+  } else{
+    if (value !== 0){
+      votes.push({
+        post_id: Number(post_id),
+        user_id: Number(user_id),
+        value,
+      })
+    }
+
+  }
+}
+
 export {
   debug,
   getUser,
@@ -178,4 +202,5 @@ export {
   getSubs,
   addComment,
   decoratePost,
+  setVoteto,
 };
