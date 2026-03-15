@@ -3,6 +3,7 @@ import express from "express";
 import * as database from "../controller/postController";
 const router = express.Router();
 import { ensureAuthenticated } from "../middleware/checkAuth";
+import { userInfo } from "os";
 
 router.get("/", async (req, res) => {
   const posts = await database.getPosts(20);
@@ -19,8 +20,18 @@ router.post("/create", ensureAuthenticated, async (req, res) => {
 });
 
 router.get("/show/:postid", async (req, res) => {
-  // ⭐ TODO
-  res.render("individualPost");
+  const postId = req.params.postid;
+
+  let post = await database.getPost(postId);
+  
+  if(!post){
+    return res.redirect("/posts")
+  }
+
+  res.render("individualPost", {
+    post: post,
+    user: req.user,
+  });
 });
 
 router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {

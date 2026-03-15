@@ -110,7 +110,7 @@ function getPosts(n = 5, sub = undefined) {
   return allPosts.slice(0, n);
 }
 
-function getPost(id) {
+function getPost(id : any) {
   return decoratePost(posts[id]);
 }
 

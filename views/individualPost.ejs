@@ -18,7 +18,18 @@
         <a role="button" href="/posts">Home</a>
       </div>
       <div>
-        <p>Implement this page yourself. It is from individualPost.ejs</p>
+        <h2><%= post.title %></h2>
+        <p><%= post.description %></p>
+
+        <% if (post.creator) { %>
+          <p>Posted by: <%= post.creator.uname %></p>
+        <% } %>
+
+        <p>Subgroup:
+         <a href="/subs/show/<%= post.subgroup %>">
+          <%= post.subgroup %>
+          </a>
+        </p>
       </div>
     </main>
   </body>
