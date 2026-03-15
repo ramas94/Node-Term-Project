@@ -13,4 +13,19 @@ async function setVote(post_id: number, user_id: number, value: number) {
   return db.setVoteto(post_id,user_id,value);
 }
 
-export { getPosts, getPost, setVote};
+async function addPost(
+  title:string,
+  link: string,
+  creator: number,
+  description: string,
+  subgroup: string,
+) {
+  return db.addPost(title,link,creator,description,subgroup)
+}
+
+export { 
+  getPosts,
+  getPost,
+  setVote,
+  addPost,
+};

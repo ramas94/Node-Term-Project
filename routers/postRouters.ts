@@ -16,7 +16,26 @@ router.get("/create", ensureAuthenticated, (req, res) => {
 });
 
 router.post("/create", ensureAuthenticated, async (req, res) => {
-  // ⭐ TODO
+  const user = await req.user;
+
+  const title = req.body.title?.trim();
+  const link = req.body.link?.trim();
+  const description = req.body.description?.trim();
+  const subgroup = req.body.subgroup?.trim();
+
+  if (!title || !subgroup || (!description && !link)) {
+    return res.redirect("/posts/create");
+  }
+
+  const post = await database.addPost(
+    title,
+    link,
+    user.id,
+    description,
+    subgroup
+  );
+
+  res.redirect(`/posts/show/${post.id}`);
 });
 
 router.get("/show/:postid", async (req, res) => {
