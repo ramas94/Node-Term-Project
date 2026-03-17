@@ -3,3 +3,22 @@
   justify-content: space-between;
   align-items: flex-start;
 }
+
+.individualcomment {
+  background-color: rgb(39, 41, 41);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px;
+  font-family:'Times New Roman', Times, serif;
+}
+
+.individualcomment p{
+  margin-bottom: 5px;
+}
+
+
+#user-comment{
+  font-weight: 600;
+  font-size: 25px;
+  color: rgb(0, 187, 255);
+}

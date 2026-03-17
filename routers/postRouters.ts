@@ -73,8 +73,22 @@ router.post(
   "/comment-create/:postid",
   ensureAuthenticated,
   async (req, res) => {
-    // ⭐ TODO
+    const postId = parseInt(req.params.postid);
+    const user = await req.user;
+    const description = req.body.description?.trim();
+
+    if (!description){
+      return res.redirect(`/posts/show/${postId}`);
+    }
+    
+    await database.addComment(
+      postId,
+      user.id,
+      description);
+    
+     res.redirect(`/posts/show/${postId}`)
   }
+ 
 );
 
 router.post("/vote/:postid", ensureAuthenticated, async(req, res) =>{

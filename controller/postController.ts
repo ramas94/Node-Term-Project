@@ -1,3 +1,4 @@
+import { SrvRecord } from "dns";
 import * as db from "../fake-db";
 
 // Make calls to your db from this file!
@@ -23,9 +24,18 @@ async function addPost(
   return db.addPost(title,link,creator,description,subgroup)
 }
 
+async function addComment(
+  post_id: number,
+  creator: number,
+  description: string,
+){
+  return db.addComment(post_id,creator,description)
+}
+
 export { 
   getPosts,
   getPost,
   setVote,
   addPost,
+  addComment,
 };
