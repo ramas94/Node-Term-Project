@@ -16,6 +16,19 @@
   margin-bottom: 5px;
 }
 
+.btn-edit-post{
+  width: 15%;
+}
+
+.voting{
+  width: 15%;
+  background-color: blueviolet;
+}
+
+.horizontal-view{
+
+}
+
 
 #user-comment{
   font-weight: 600;

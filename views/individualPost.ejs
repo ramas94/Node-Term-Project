@@ -30,12 +30,20 @@
           <%= post.subgroup %>
           </a>
         </p>
+      
+           <% if (user && post.creator && user.id === post.creator.id) { %>
+        <button class="btn-edit-post" href="/posts/edit/<%= post.id %>"> Edit Post</button>
+        <% } %>
+        <br>
+      
         <% if (user) { %>
           <div>
           <form action="/posts/vote/<%= post.id %>" method="post">
-           <button type="submit" name="setvoteto" value="1">👍Like</button>
-          <button type="submit" name="setvoteto" value="-1">👎dislike</button>
-         <button type="submit" name="setvoteto" value="0">Remove Vote</button>
+            <div class="horizontal-view">
+           <button class="voting" type="submit" name="setvoteto" value="1">👍Like</button>
+          <button class="voting" type="submit" name="setvoteto" value="-1">👎dislike</button>
+         <button class="voting" type="submit" name="setvoteto" value="0">Remove Vote</button>
+         </div>
         </form>
         <% } %>
         

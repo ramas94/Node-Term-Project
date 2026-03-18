@@ -40,6 +40,7 @@ router.post("/create", ensureAuthenticated, async (req, res) => {
 
 router.get("/show/:postid", async (req, res) => {
   const postId = req.params.postid;
+  const user = await req.user;
 
   let post = await database.getPost(postId);
   
@@ -48,17 +49,60 @@ router.get("/show/:postid", async (req, res) => {
   }
 
   res.render("individualPost", {
-    post: post,
-    user: req.user,
+    post,
+    user,
   });
 });
 
 router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {
-  // ⭐ TODO
+  const postId = parseInt(req.params.postid);
+  const post = await database.getPost(postId);
+  const user = await req.user;
+
+  if(!post){
+    return res.redirect("/posts");
+  }
+
+  if (post.creator.id !== user.id){
+    return res.redirect(`/posts/show/${postId}`);
+  }
+
+  res.render("editPost", {
+    post,
+    user,
+  })
 });
 
 router.post("/edit/:postid", ensureAuthenticated, async (req, res) => {
-  // ⭐ TODO
+  const postId = parseInt(req.params.postid);
+  const post = await database.getPost(postId);
+  const user = await req.user;
+
+  if (!post){
+    return res.redirect("/posts");
+  }
+
+  if(post.creator.id!== user.id){
+    return res.redirect(`/posts/show/${postId}`);
+  }
+
+  const title = req.body.title?.trim();
+  const link = req.body.link?.trim();
+  const description = req.body.description?.trim()
+  const subgroup = req.body.subgroup?.trim();
+
+  if (!title || !subgroup || (!link && !description)){
+    return res.redirect(`/posts/edit/${postId}`);
+  }
+
+  await database.editPost(postId,{
+    title,
+    link,
+    description,
+    subgroup,
+  });
+
+  res.redirect(`/posts/show/${postId}`);
 });
 
 router.get("/deleteconfirm/:postid", ensureAuthenticated, async (req, res) => {

@@ -36,6 +36,13 @@ async function getSubs(){
   return db.getSubs();
 }
 
+async function editPost(
+  post_id: number,
+  changes: any,
+){
+  return db.editPost(post_id,changes);
+}
+
 export { 
   getPosts,
   getPost,
@@ -43,4 +50,5 @@ export {
   addPost,
   addComment,
   getSubs,
+  editPost,
 };
