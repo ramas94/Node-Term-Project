@@ -17,7 +17,8 @@
 }
 
 .btn-edit-post{
-  width: 15%;
+  width: 45%;
+  margin: 0px 0px 20px 0px;
 }
 
 .voting{
@@ -25,13 +26,16 @@
   background-color: blueviolet;
 }
 
-.horizontal-view{
 
-}
 
 
 #user-comment{
   font-weight: 600;
   font-size: 25px;
   color: rgb(0, 187, 255);
+}
+
+#delete{
+  background-color: red;
+  font-weight: 600;
 }

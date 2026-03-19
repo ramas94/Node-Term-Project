@@ -43,6 +43,10 @@ async function editPost(
   return db.editPost(post_id,changes);
 }
 
+async function deletePost(post_id:number) {
+  return db.deletePost(post_id);
+}
+
 export { 
   getPosts,
   getPost,
@@ -51,4 +55,5 @@ export {
   addComment,
   getSubs,
   editPost,
+  deletePost,
 };

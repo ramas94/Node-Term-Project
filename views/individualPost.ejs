@@ -30,11 +30,12 @@
           <%= post.subgroup %>
           </a>
         </p>
-      
+      <div class="authOptions">
            <% if (user && post.creator && user.id === post.creator.id) { %>
-        <button class="btn-edit-post" href="/posts/edit/<%= post.id %>"> Edit Post</button>
+        <a class="btn-edit-post" role="button" href="/posts/edit/<%= post.id %>">Edit Post</a>
+        <a class="btn-edit-post" id="delete" role="button" href="/posts/deleteconfirm/<%= post.id %>"> 🗑 Delete Post</a>
         <% } %>
-        <br>
+       </div>
       
         <% if (user) { %>
           <div>

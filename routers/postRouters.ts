@@ -106,11 +106,46 @@ router.post("/edit/:postid", ensureAuthenticated, async (req, res) => {
 });
 
 router.get("/deleteconfirm/:postid", ensureAuthenticated, async (req, res) => {
-  // ⭐ TODO
+  const postId = parseInt(req.params.postid);
+  const post = await database.getPost(postId);
+  const user = await req.user;
+
+  if (!post){
+    return res.redirect("/posts");
+  }
+
+  if(post.creator.id !== user.id){
+    return res.redirect(`/posts/show/${postId}`);
+  }
+
+  res.render("deleteConfirm",{
+    post,
+    user,
+  });
 });
 
 router.post("/delete/:postid", ensureAuthenticated, async (req, res) => {
-  // ⭐ TODO
+  
+  const postId = parseInt(req.params.postid);
+  const post = await database.getPost(postId);
+  const user = await req.user;
+  const confirm = req.body.confirm;
+
+  if(!post){
+    return res.redirect("/posts");
+  }
+  if(post.creator.id !== user.id){
+    return res.redirect(`/posts/show/${postId}`);
+  }
+
+  if(confirm !== "yes"){
+    return res.redirect(`/posts/show/${postId}`);
+  }
+
+  const subgroup = post.subgroup;
+  await database.deletePost(postId);
+  res.redirect (`/subs/show/${subgroup}`);
+
 });
 
 router.post(
