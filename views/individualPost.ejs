@@ -17,7 +17,7 @@
         <h1>View Post</h1>
         <a role="button" href="/posts">Home</a>
       </div>
-      <div>
+      <div class="individualPost">
         <h2><%= post.title %></h2>
         <p><%= post.description %></p>
 
@@ -36,24 +36,59 @@
         <a class="btn-edit-post" id="delete" role="button" href="/posts/deleteconfirm/<%= post.id %>"> 🗑 Delete Post</a>
         <% } %>
        </div>
-      
-        <% if (user) { %>
-          <div>
-          <form action="/posts/vote/<%= post.id %>" method="post">
-            <div class="horizontal-view">
-           <button class="voting" type="submit" name="setvoteto" value="1">👍Like</button>
-          <button class="voting" type="submit" name="setvoteto" value="-1">👎dislike</button>
-         <button class="voting" type="submit" name="setvoteto" value="0">Remove Vote</button>
-         </div>
-        </form>
-        <% } %>
-        
 
-        <p>
+         <p>
         Score:
         <%= post.votes.reduce((sum, vote) => sum + vote.value, 0) %>
         </p>
-        
+
+        <%
+          let currentVote = 0;
+
+           if (user) {
+             const foundVote = post.votes.find(vote => vote.user_id === user.id);
+             if (foundVote) {
+            currentVote = foundVote.value;
+                  }
+              }
+          %>
+      
+        <% if (user) { %>
+          <div class="vote-bar">
+            <form action="/posts/vote/<%= post.id %>" method="post">
+            <button
+              class="voting vote-up <%= currentVote === 1 ? 'active-up' : '' %>"
+              type="submit"
+              name="setvoteto"
+              value="1"
+            >
+              👍 Like
+            </button>
+
+            <button
+              class="voting vote-down <%= currentVote === -1 ? 'active-down' : '' %>"
+              type="submit"
+              name="setvoteto"
+              value="-1"
+            >
+              👎 Dislike
+            </button>
+
+            <button
+              class="voting vote-reset"
+              type="submit"
+              name="setvoteto"
+              value="0"
+            >
+              Remove Vote
+            </button>
+          </form>  
+                    
+         </div>
+        <% } %>
+
+        </div>
+        <div>
         <h3>Comments</h3>
 
         <% if (post.comments.length === 0) { %>
@@ -80,7 +115,6 @@
           </form>
         <% } %>
         </div>
-      </div>
     </main>
   </body>
 </html>
